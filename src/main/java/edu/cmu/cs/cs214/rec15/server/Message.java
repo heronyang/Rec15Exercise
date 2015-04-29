@@ -95,7 +95,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s: %s", timestamp, sender, content);
+        return String.format("[%s] %s: %s, date: %s", timestamp, sender, content, getServerTimestamp());
     }
 
 }

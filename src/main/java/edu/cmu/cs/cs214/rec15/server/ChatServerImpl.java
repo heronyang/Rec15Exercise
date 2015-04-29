@@ -5,8 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -181,14 +184,19 @@ public class ChatServerImpl extends Thread implements ChatServer {
             // Message#setServerTimestamp was created for you in the Message
             // class.
 
+            msg.setServerTimestamp(new Date());
+
             // Synchronize because we are iterating through all clients in a
             // thread
             synchronized (clients) {
                 for (Socket s : clients) {
                     try {
+
                         ObjectOutputStream out = new ObjectOutputStream(
                                 s.getOutputStream());
+
                         out.writeObject(msg);
+
                     } catch (IOException e) {
                         Log.e(TAG, "Unable to send message to client.");
                     }
